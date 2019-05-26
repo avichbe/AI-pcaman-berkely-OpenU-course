@@ -16,6 +16,7 @@
 In search.py, you will implement generic search algorithms which are called by
 Pacman agents (in searchAgents.py).
 """
+#i implement the following functions: graphSearch, depthFirstSearch, breadthFirstSearch, uniformCostSearch, nullHeuristic, aStarSearch
 
 import util
 
@@ -61,6 +62,7 @@ class SearchProblem:
         """
         util.raiseNotDefined()
         """general search on graph, can be used for dfs,bfs,ucs depending on the passed structure"""
+# i implemented this function to be generic function that through it i implemented the other search functions
 def graphSearch(problem, structure):
     structure.push([(problem.getStartState(), "Stop", 0)])
     visited = []
@@ -108,16 +110,18 @@ def depthFirstSearch(problem):
     print "Is the start a goal?", problem.isGoalState(problem.getStartState())
     print "Start's successors:", problem.getSuccessors(problem.getStartState())
     """
+	#returning graphSearch with Stack as structure, make the graphSearch run the DFS algorithm.
     return graphSearch(problem, util.Stack())
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
+	#returning graphSearch with Queue as structure, make the graphSearch run the DFS algorithm.
     return graphSearch(problem, util.Queue())
 
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
-    #creating new PQ - with the price
+    #creating new PQ structure with lambda to return UCS algorithm.
     cost = lambda path: problem.getCostOfActions([x[1] for x in path][1:])
     pq = util.PriorityQueueWithFunction(cost)
     return graphSearch(problem, pq)
@@ -131,7 +135,7 @@ def nullHeuristic(state, problem=None):
 
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
-    # cost =  price + the value returned by heuristic func in state as parameter
+    # cost =  price + the value returned by heuristic func in state as parameter.
     cost = lambda path: problem.getCostOfActions([x[1] for x in path][1:]) + heuristic(path[-1][0], problem)
     pq = util.PriorityQueueWithFunction(cost)
     return graphSearch(problem, pq)
